@@ -69,7 +69,7 @@ Parameters:
 to access the wrapped functionality;
   redirect-uri -- (optional) the URI where the function will redirect
 if the user is not authenticated."
-  `(if (authorized? (:roles (session/get :simple-auth-user))
+  `(if (authorized? (:roles (current-user))
                     ~roles)
      ~func
      (resp/redirect (or ~redirect-uri "/"))))
