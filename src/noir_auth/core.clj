@@ -22,14 +22,10 @@ Parameters:
 Returns:
   true -- if authenticated
   nil -- otherwise."
-  (loop [lst users-seq
-         item (first users-seq)]
-    (if (nil? item)
-      nil
-      (if (and (= user (:user item))
-               (crypt/compare password (:password item)))
-        (login-user item)
-        (recur (next lst) (first (next lst))) ))) )
+  (some #(and (= user (:user %))
+              (crypt/compare password (:password %))
+              (login-user %))
+        users-seq))
 
 (defn current-user []
   "Returns authenticated user."
