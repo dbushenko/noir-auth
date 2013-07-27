@@ -27,7 +27,7 @@ Returns:
     (if (nil? item)
       nil
       (if (and (= user (:user item))
-               (compare password (:password item)))
+               (crypt/compare password (:password item)))
         (login-user item)
         (recur (next lst) (first (next lst))) ))) )
 
