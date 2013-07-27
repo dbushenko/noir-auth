@@ -36,7 +36,7 @@ Returns:
   (crypt/encrypt password))
 
 (defn logout []
-  (session/put! :simple-auth-user nil))
+  (session/remove! :simple-auth-user))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Authorization
