@@ -38,7 +38,7 @@ You need to switch on the session management using noir. Your Ring handler shoul
 
 Authentication should look like following:
 
-  (POST "/login" [user password] (fn [a] (if (auth/authenticate user password
+	  (POST "/login" [user password] (fn [a] (if (auth/authenticate user password
                                                                 [{:user "user
                                                                   :password (auth/generate-password "password")
                                                                   :roles #{::user ::editor ::admin}}])
