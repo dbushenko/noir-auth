@@ -55,16 +55,10 @@ if the user is not authenticated."
 (defn authorized? [user-roles auth-roles]
   "This is a utility function used from the macros authorized-for.
 It checks whether the user roles intersect with the requested roles."
-  (let [auth-roles-seq (if (seq? auth-roles) auth-roles [auth-roles])]
-    (loop [roles user-roles
-           ur (first roles)]
-      (if (nil? ur)
-        nil
-        (if-not (empty? (filter true?
-                                (map #(isa? ur %) auth-roles-seq)))
-          true
-          (recur (next roles)
-                 (first (next roles))))))))
+  (some true?
+    (for [auth-role (if (seq? auth-roles) auth-roles [auth-roles])
+          user-role user-roles]
+        (isa? user-role auth-role))))
 
 (defmacro authorized-for [func roles & [redirect-uri]]
     "The macro should be used to wrap a function which should check
