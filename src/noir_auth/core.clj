@@ -4,11 +4,19 @@
             [noir.response :as resp]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Authentication
+;; Utilities
 
-(defn- login-user [user]
+(defn login-user! [user]
   (session/put! :simple-auth-user user)
   true)
+
+(defn credentials-match? [user password users-seq]
+  (some #(and (= user (:user %))
+              (crypt/compare password (:password %)))
+        users-seq))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Authentication
 
 (defn authenticate [user password users-seq]
   "This is the function which tries to match user/password against
@@ -22,10 +30,8 @@ Parameters:
 Returns:
   true -- if authenticated
   nil -- otherwise."
-  (some #(and (= user (:user %))
-              (crypt/compare password (:password %))
-              (login-user %))
-        users-seq))
+  (if (credentials-match? user password users-seq)
+              (login-user %)))
 
 (defn current-user []
   "Returns authenticated user."
@@ -56,12 +62,12 @@ if the user is not authenticated."
   "This is a utility function used from the macros authorized-for.
 It checks whether the user roles intersect with the requested roles."
   (some true?
-    (for [auth-role (if (seq? auth-roles) auth-roles [auth-roles])
-          user-role user-roles]
-        (isa? user-role auth-role))))
+        (for [auth-role (if (seq? auth-roles) auth-roles [auth-roles])
+              user-role user-roles]
+          (isa? user-role auth-role))))
 
 (defmacro authorized-for [func roles & [redirect-uri]]
-    "The macro should be used to wrap a function which should check
+  "The macro should be used to wrap a function which should check
 whether the user is authorized to call this functionality.
 Parameters:
   func -- the function call;
