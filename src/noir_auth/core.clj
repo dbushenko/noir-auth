@@ -10,10 +10,11 @@
   (session/put! :simple-auth-user user)
   true)
 
-(defn credentials-match? [user password users-seq]
-  (some #(and (= user (:user %))
-              (crypt/compare password (:password %)))
-        users-seq))
+(defn find-user [user password users-seq]
+  (first
+   (filter #(and (= user (:user %))
+                 (crypt/compare password (:password %)))
+           users-seq)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Authentication
@@ -30,8 +31,9 @@ Parameters:
 Returns:
   true -- if authenticated
   nil -- otherwise."
-  (if (credentials-match? user password users-seq)
-              (login-user %)))
+  (let [user-item (find-user user password users-seq)]
+    (if (user-item)
+      (login-user! user-item))))
 
 (defn current-user []
   "Returns authenticated user."

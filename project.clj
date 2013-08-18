@@ -1,4 +1,4 @@
-(defproject noir-auth "0.2.0-SNAPSHOT"
+(defproject noir-auth "0.3.0-SNAPSHOT"
   :description "Simple authentication and authorization using lib-noir"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
