@@ -12,7 +12,7 @@ See the usage example here: https://github.com/dbushenko/noir-auth-example
 
 Add dependency
 
-	[noir-auth "0.2.0-SNAPSHOT"]
+	[noir-auth "0.3.0-SNAPSHOT"]
 
 You should be using lib-noir in your project since noir-auth relies on
 the session management functionality provided by the lib-noir. That's why your project
