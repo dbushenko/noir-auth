@@ -18,7 +18,7 @@ You should be using lib-noir in your project since noir-auth relies on
 the session management functionality provided by the lib-noir. That's why your project
 should also have this dependency:
 
-       [lib-noir "0.6.6"]
+       [lib-noir "0.6.8"]
 
 You need to switch on the session management using noir. Your Ring handler should look like this:
 
