@@ -77,6 +77,6 @@ There are two extra functions provided:
 
 ## License
 
-Copyright © 2013 D.Bushenko
+Copyright © 2013 Dmitry Bushenko
 
 Distributed under the Eclipse Public License, the same as Clojure.
