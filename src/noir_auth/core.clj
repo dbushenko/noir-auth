@@ -32,7 +32,7 @@ Returns:
   true -- if authenticated
   nil -- otherwise."
   (let [user-item (find-user user password users-seq)]
-    (if (user-item)
+    (if user-item
       (login-user! user-item))))
 
 (defn current-user []
